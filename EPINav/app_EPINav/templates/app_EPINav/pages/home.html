@@ -1,0 +1,27 @@
+{% extends "app_EPINav/base.html" %}
+{% block title %}Home - EPINav{% endblock title %}
+
+{% block content %}
+<!-- Include the header partial -->
+{% include 'app_EPINav/partials/header.html' %}
+
+<html lang="pt-br" data-bs-theme="dark">
+
+<div class="container">
+    <h1>Seja Bem Vindo à EPINav</h1>
+
+    <a href="{% url 'colaborador_list' %}" class="btn btn-primary" data-mdb-ripple-init>
+    Listar Colaboradores
+    </a>
+    <br>
+    <br>
+
+    <p>Software de controle de empréstimos de Equipamento de Proteção Individual (At. Desenvolvimento de Sistemas SENAI)</p>
+</div>
+
+{% endblock content %}
+
+{% block footer %}
+    <!-- Include the footer partial -->
+    {% include 'app_EPINav/partials/footer.html' %}
+{% endblock footer %}

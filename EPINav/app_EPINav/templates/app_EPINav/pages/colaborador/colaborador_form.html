@@ -1,0 +1,24 @@
+{% extends "app_EPINav/base.html" %}
+{% block title %}Colaborador_form{% endblock title %}
+
+{% block content %}
+<!-- Include the header partial -->
+{% include 'app_EPINav/partials/header.html' %}
+
+<body>
+    <h1>{% if object %}Editar{% else %}Novo{% endif %} Colaborador</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
+    <a href="{% url 'colaborador_list' %}">Voltar</a>
+
+</body>
+
+{% endblock content %}
+
+{% block footer %}
+    <!-- Include the footer partial -->
+    {% include 'app_EPINav/partials/footer.html' %}
+{% endblock footer %}
