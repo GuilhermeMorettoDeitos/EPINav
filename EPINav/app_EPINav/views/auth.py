@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from app_EPINav.models.usuario import UsuarioSistema
 
+
 def login_view(request):
     if request.method == "POST":
         nome_usuario = request.POST.get("nome_usuario")

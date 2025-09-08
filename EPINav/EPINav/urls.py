@@ -23,6 +23,7 @@ from app_EPINav.views import (
     ColaboradorDeleteView,
     home
 )
+from app_EPINav.views.usuarioSistema import FormularioLogin
 #from app_EPINav.views.login import login_view, logout_view
 
 
@@ -32,9 +33,10 @@ urlpatterns = [
     # path('logout/', logout_view, name='logout'),
     
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
+    path('home/', home, name='home'),
     path('colaboradores/', ColaboradorListView.as_view(), name='colaborador_list'),
     path('colaboradores/novo/', ColaboradorCreateView.as_view(), name='colaborador_create'),
     path('colaboradores/<int:pk>/editar/', ColaboradorUpdateView.as_view(), name='colaborador_update'),
     path('colaboradores/<int:pk>/deletar/', ColaboradorDeleteView.as_view(), name='colaborador_delete'),
+    path('', FormularioLogin.as_view(), name='login'),
 ]

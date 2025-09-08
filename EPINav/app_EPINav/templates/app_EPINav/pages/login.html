@@ -1,0 +1,18 @@
+{% extends "app_EPINav/base.html" %}
+{% block title %}Login - EPINav{% endblock title %}
+
+{% block content %}
+
+<h2>Login</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+  </form>
+
+{% endblock content %}
+
+{% block footer %}
+    <!-- Include the footer partial -->
+    {% include 'app_EPINav/partials/footer.html' %}
+{% endblock footer %}
