@@ -1,23 +1,21 @@
 {% extends "app_EPINav/base.html" %}
-{% block title %}{% if object %}Editar{% else %}Novo{% endif %} Colaborador{% endblock title %}
+{% block title %}{% if object %}Editar{% else %}Novo{% endif %} Usuário{% endblock %}
 
 {% block content %}
 {% include 'app_EPINav/partials/header.html' %}
 
 <div class="container">
-  <h2>{% if object %}Editar{% else %}Novo{% endif %} Colaborador</h2>
-
+  <h2>{% if object %}Editar{% else %}Novo{% endif %} Usuário</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
 
     <button type="submit" class="btn btn-success">Salvar</button>
-    <a href="{% url 'colaborador_list' %}" class="btn btn-secondary">Cancelar</a>
+    <a href="{% url 'listar_usuarios' %}" class="btn btn-secondary">Cancelar</a>
   </form>
 </div>
-
-{% endblock content %}
+{% endblock %}
 
 {% block footer %}
 {% include 'app_EPINav/partials/footer.html' %}
-{% endblock footer %}
+{% endblock %}

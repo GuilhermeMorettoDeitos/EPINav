@@ -1,8 +1,6 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from app_EPINav.views.decorators import login_required_custom
 
-
-@login_required
+@login_required_custom
 def home(request):
     return render(request, 'app_EPINav/pages/home.html')
-

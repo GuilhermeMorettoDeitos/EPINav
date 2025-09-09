@@ -1,45 +1,43 @@
 {% extends "app_EPINav/base.html" %}
-{% block title %}Lista de Colaboradores{% endblock title %}
+{% block title %}Usuários do Sistema{% endblock %}
 
 {% block content %}
 {% include 'app_EPINav/partials/header.html' %}
 
 <div class="container">
-  <h2>Lista de Colaboradores</h2>
-  <a class="btn btn-primary" href="{% url 'colaborador_create' %}">➕ Adicionar Novo</a>
+  <h2>Usuários do Sistema</h2>
+  <a class="btn btn-primary" href="{% url 'criar_usuario' %}">➕ Adicionar Usuário</a>
 
   <table class="table mt-3">
     <thead>
       <tr>
-        <th>Nome</th>
-        <th>Cargo</th>
-        <th>Departamento</th>
+        <th>Nome de Usuário</th>
+        <th>Admin?</th>
         <th>Ações</th>
       </tr>
     </thead>
     <tbody>
-      {% for c in object_list %}
+      {% for u in usuarios %}
         <tr>
-          <td>{{ c.nome }}</td>
-          <td>{{ c.cargo }}</td>
-          <td>{{ c.departamento }}</td>
+          <td>{{ u.nome_usuario }}</td>
+          <td>{% if u.is_admin %}✅{% else %}❌{% endif %}</td>
           <td>
-            <a href="{% url 'colaborador_update' c.pk %}" class="btn btn-sm btn-warning">Editar</a>
-            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ c.pk }}">Deletar</button>
+            <a href="{% url 'editar_usuario' u.pk %}" class="btn btn-sm btn-warning">Editar</a>
+            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ u.pk }}">Deletar</button>
 
             <!-- Modal -->
-            <div class="modal fade" id="deleteModal{{ c.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ c.pk }}" aria-hidden="true">
+            <div class="modal fade" id="deleteModal{{ u.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ u.pk }}" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel{{ c.pk }}">Confirmar Exclusão</h5>
+                    <h5 class="modal-title" id="deleteModalLabel{{ u.pk }}">Confirmar Exclusão</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                   </div>
                   <div class="modal-body">
-                    Tem certeza que deseja deletar <strong>{{ c.nome }}</strong>?
+                    Tem certeza que deseja deletar <strong>{{ u.nome_usuario }}</strong>?
                   </div>
                   <div class="modal-footer">
-                    <form method="post" action="{% url 'colaborador_delete' c.pk %}">
+                    <form method="post" action="{% url 'deletar_usuario' u.pk %}">
                       {% csrf_token %}
                       <button type="submit" class="btn btn-danger">Sim, excluir</button>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -53,7 +51,7 @@
         </tr>
       {% empty %}
         <tr>
-          <td colspan="4">Nenhum colaborador encontrado.</td>
+          <td colspan="3">Nenhum usuário encontrado.</td>
         </tr>
       {% endfor %}
     </tbody>
@@ -61,7 +59,6 @@
 </div>
 
 {% endblock content %}
-
 {% block footer %}
 {% include 'app_EPINav/partials/footer.html' %}
-{% endblock footer %}
+{% endblock %}

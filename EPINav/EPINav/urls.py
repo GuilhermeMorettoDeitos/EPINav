@@ -1,21 +1,6 @@
-"""
-URL configuration for EPINav project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
+
 from app_EPINav.views import (
     ColaboradorListView,
     ColaboradorCreateView,
@@ -23,20 +8,28 @@ from app_EPINav.views import (
     ColaboradorDeleteView,
     home
 )
-from app_EPINav.views.usuarioSistema import FormularioLogin
-#from app_EPINav.views.login import login_view, logout_view
 
+from app_EPINav.views.usuarioSistema import (
+    listar_usuarios, criar_usuario,
+    editar_usuario, deletar_usuario
+)
+
+from app_EPINav.views.auth import login_view, logout_view
 
 urlpatterns = [
-    # Login / Logout
-    # path('login/', login_view, name='login'),
-    # path('logout/', logout_view, name='logout'),
-    
-    path('admin/', admin.site.urls),
+    path('', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
     path('home/', home, name='home'),
+
+    # Colaboradores
     path('colaboradores/', ColaboradorListView.as_view(), name='colaborador_list'),
     path('colaboradores/novo/', ColaboradorCreateView.as_view(), name='colaborador_create'),
     path('colaboradores/<int:pk>/editar/', ColaboradorUpdateView.as_view(), name='colaborador_update'),
     path('colaboradores/<int:pk>/deletar/', ColaboradorDeleteView.as_view(), name='colaborador_delete'),
-    path('', FormularioLogin.as_view(), name='login'),
+
+    # Usuários
+    path('usuarios/', listar_usuarios, name='listar_usuarios'),
+    path('usuarios/novo/', criar_usuario, name='criar_usuario'),
+    path('usuarios/<int:pk>/editar/', editar_usuario, name='editar_usuario'),
+    path('usuarios/<int:pk>/deletar/', deletar_usuario, name='deletar_usuario'),
 ]

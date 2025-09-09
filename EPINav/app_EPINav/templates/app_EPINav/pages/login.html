@@ -1,18 +1,31 @@
 {% extends "app_EPINav/base.html" %}
-{% block title %}Login - EPINav{% endblock title %}
 
 {% block content %}
-
-<h2>Login</h2>
-  <form method="post">
+<div class="container mt-5">
+  <h2>Login</h2>
+  <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
+    
+    <!-- Campo oculto para redirecionamento -->
+    {% if request.GET.next %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}">
+    {% endif %}
+
+    <div class="mb-3">
+      <label for="nome_usuario" class="form-label">Usuário</label>
+      <input type="text" name="nome_usuario" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="senha" class="form-label">Senha</label>
+      <input type="password" name="senha" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Entrar</button>
   </form>
 
-{% endblock content %}
-
-{% block footer %}
-    <!-- Include the footer partial -->
-    {% include 'app_EPINav/partials/footer.html' %}
-{% endblock footer %}
+  {% for message in messages %}
+    <div class="alert alert-warning mt-3">{{ message }}</div>
+  {% endfor %}
+</div>
+{% endblock %}
