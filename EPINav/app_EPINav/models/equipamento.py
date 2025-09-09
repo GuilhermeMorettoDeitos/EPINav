@@ -1,12 +1,17 @@
 from django.db import models
 
-# Create your models here.
+class Equipamento(models.Model):
+    ESTADOS = [
+        ('novo', 'Novo'),
+        ('usado', 'Usado'),
+        ('manutencao', 'Em manutenção'),
+        ('inativo', 'Inativo'),
+    ]
 
-class equipamentos(models.Model):
-    nome = models.CharField(max_length=100)
+    nome = models.CharField(max_length=150, unique=True)
     descricao = models.TextField(blank=True, null=True)
     fabricante = models.CharField(max_length=100)
-    estado = models.CharField(max_length=50)
+    estado = models.CharField(max_length=20, choices=ESTADOS, default='novo')
 
     def __str__(self):
-        return self.nome
+        return f"{self.nome} - {self.fabricante}"

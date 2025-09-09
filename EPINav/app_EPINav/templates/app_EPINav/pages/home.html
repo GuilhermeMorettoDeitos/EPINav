@@ -2,29 +2,57 @@
 {% block title %}Home - EPINav{% endblock title %}
 
 {% block content %}
-<!-- Include the header partial -->
 {% include 'app_EPINav/partials/header.html' %}
 
-<html lang="pt-br" data-bs-theme="dark">
+<div class="container mt-5">
+  <!-- Título -->
+  <div class="text-center mb-5">
+    <h1 class="fw-bold">Seja Bem-Vindo à <span class="text-primary">EPINav</span></h1>
+    <p class="text-muted">
+      Sistema de controle de empréstimos de Equipamentos de Proteção Individual (EPI).  
+      <br>Projeto desenvolvido no curso de Desenvolvimento de Sistemas - SENAI.
+    </p>
+  </div>
 
-<div class="container">
-    <h1>Seja Bem Vindo à EPINav</h1>
+  <!-- Cards de navegação -->
+  <div class="row g-4">
+    <!-- Colaboradores -->
+    <div class="col-md-4">
+      <div class="card shadow-lg h-100 text-center">
+        <div class="card-body">
+          <h5 class="card-title">👤 Colaboradores</h5>
+          <p class="card-text text-muted">Gerencie os colaboradores da empresa.</p>
+          <a href="{% url 'colaborador_list' %}" class="btn btn-outline-primary">Acessar</a>
+        </div>
+      </div>
+    </div>
 
-    <a href="{% url 'colaborador_list' %}" class="btn btn-primary" data-mdb-ripple-init>
-    Listar Colaboradores
-    </a>
-    <a href="{% url 'listar_usuarios' %}" class="btn btn-primary" data-mdb-ripple-init>
-    Listar Usuarios do Sistema
-    </a>
-    <br>
-    <br>
+    <!-- Usuários do Sistema -->
+    <div class="col-md-4">
+      <div class="card shadow-lg h-100 text-center">
+        <div class="card-body">
+          <h5 class="card-title">🛠️ Usuários do Sistema</h5>
+          <p class="card-text text-muted">Controle de acesso e permissões de administradores.</p>
+          <a href="{% url 'listar_usuarios' %}" class="btn btn-outline-primary">Acessar</a>
+        </div>
+      </div>
+    </div>
 
-    <p>Software de controle de empréstimos de Equipamento de Proteção Individual (At. Desenvolvimento de Sistemas SENAI)</p>
+    <!-- Equipamentos -->
+    <div class="col-md-4">
+      <div class="card shadow-lg h-100 text-center">
+        <div class="card-body">
+          <h5 class="card-title">📦 Equipamentos</h5>
+          <p class="card-text text-muted">Gerencie os EPIs disponíveis para empréstimo.</p>
+          <a href="{% url 'equipamento_list' %}" class="btn btn-outline-primary">Acessar</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock content %}
 
 {% block footer %}
-    <!-- Include the footer partial -->
-    {% include 'app_EPINav/partials/footer.html' %}
+{% include 'app_EPINav/partials/footer.html' %}
 {% endblock footer %}

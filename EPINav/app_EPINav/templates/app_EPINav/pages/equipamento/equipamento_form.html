@@ -1,0 +1,21 @@
+{% extends "app_EPINav/base.html" %}
+{% block title %}{% if object %}Editar{% else %}Novo{% endif %} Equipamento{% endblock %}
+
+{% block content %}
+{% include 'app_EPINav/partials/header.html' %}
+
+<div class="container">
+  <h2>{% if object %}Editar{% else %}Novo{% endif %} Equipamento</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="{% url 'equipamento_list' %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% include 'app_EPINav/partials/footer.html' %}
+{% endblock %}

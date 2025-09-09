@@ -1,0 +1,66 @@
+{% extends "app_EPINav/base.html" %}
+{% block title %}Equipamentos{% endblock %}
+
+{% block content %}
+{% include 'app_EPINav/partials/header.html' %}
+
+<div class="container">
+  <h2>Equipamentos</h2>
+  <a class="btn btn-primary" href="{% url 'equipamento_create' %}">➕ Adicionar Equipamento</a>
+
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Fabricante</th>
+        <th>Estado</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in equipamentos %}
+        <tr>
+          <td>{{ e.nome }}</td>
+          <td>{{ e.fabricante }}</td>
+          <td>{{ e.get_estado_display }}</td>
+          <td>
+            <a href="{% url 'equipamento_update' e.pk %}" class="btn btn-sm btn-warning">Editar</a>
+            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ e.pk }}">Deletar</button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal{{ e.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ e.pk }}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel{{ e.pk }}">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                  </div>
+                  <div class="modal-body">
+                    Tem certeza que deseja excluir <strong>{{ e.nome }}</strong>?
+                  </div>
+                  <div class="modal-footer">
+                    <form method="post" action="{% url 'equipamento_delete' e.pk %}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-danger">Sim, excluir</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">Nenhum equipamento cadastrado.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock content %}
+{% block footer %}
+{% include 'app_EPINav/partials/footer.html' %}
+{% endblock %}

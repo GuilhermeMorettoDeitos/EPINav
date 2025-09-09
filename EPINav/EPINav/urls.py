@@ -16,6 +16,11 @@ from app_EPINav.views.usuarioSistema import (
 
 from app_EPINav.views.auth import login_view, logout_view
 
+from app_EPINav.views.equipamento import (
+    EquipamentoListView, EquipamentoCreateView,
+    EquipamentoUpdateView, EquipamentoDeleteView
+)
+
 urlpatterns = [
     path('', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
@@ -32,4 +37,10 @@ urlpatterns = [
     path('usuarios/novo/', criar_usuario, name='criar_usuario'),
     path('usuarios/<int:pk>/editar/', editar_usuario, name='editar_usuario'),
     path('usuarios/<int:pk>/deletar/', deletar_usuario, name='deletar_usuario'),
+    
+    # Equipamentos
+    path('equipamentos/', EquipamentoListView.as_view(), name='equipamento_list'),
+    path('equipamentos/novo/', EquipamentoCreateView.as_view(), name='equipamento_create'),
+    path('equipamentos/<int:pk>/editar/', EquipamentoUpdateView.as_view(), name='equipamento_update'),
+    path('equipamentos/<int:pk>/excluir/', EquipamentoDeleteView.as_view(), name='equipamento_delete'),
 ]
