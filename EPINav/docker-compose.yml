@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  web:
+    build: .
+    container_name: epinav_web
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - db
+
+  db:
+    image: nouchka/sqlite3  # imagem simples para SQLite (opcional)
+    container_name: epinav_db
+    volumes:
+      - ./db.sqlite3:/db/db.sqlite3

@@ -5,13 +5,17 @@
 {% include 'app_EPINav/partials/header.html' %}
 
 <div class="container mt-5">
-  <!-- Título -->
-  <div class="text-center mb-5">
-    <h1 class="fw-bold">Seja Bem-Vindo à <span class="text-primary">EPINav</span></h1>
-    <p class="text-muted">
-      Sistema de controle de empréstimos de Equipamentos de Proteção Individual (EPI).  
-      <br>Projeto desenvolvido no curso de Desenvolvimento de Sistemas - SENAI.
-    </p>
+  <div class="d-flex justify-content-between align-items-center mb-5">
+    <div>
+      <h1 class="fw-bold">Seja Bem-Vindo à <span class="text-primary">EPINav</span></h1>
+      <p class="text-muted">
+        Sistema de controle de empréstimos de Equipamentos de Proteção Individual (EPI).  
+        <br>Projeto desenvolvido no curso de Desenvolvimento de Sistemas - SENAI.
+      </p>
+    </div>
+    <div>
+      <a href="{% url 'logout' %}" class="btn btn-danger btn-lg">Encerrar sessão</a>
+    </div>
   </div>
 
   <!-- Cards de navegação -->

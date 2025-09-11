@@ -1,27 +1,39 @@
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from app_EPINav.models.colaborador import Colaborador
-from app_EPINav.forms.colaborador import ColaboradorForm  # import do form específico
-from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
+from app_EPINav.models.colaborador import Colaborador
+from app_EPINav.forms.colaborador import ColaboradorForm
+from app_EPINav.views.decorators import login_required_custom  # decorator de login
+
+# Listagem de colaboradores
+@method_decorator(login_required_custom, name="dispatch")
 class ColaboradorListView(ListView):
     model = Colaborador
     template_name = 'app_EPINav/pages/colaborador/colaborador_list.html'
+    context_object_name = 'colaboradores'
 
 
+# Criação de colaboradores
+@method_decorator(login_required_custom, name="dispatch")
 class ColaboradorCreateView(CreateView):
     model = Colaborador
     form_class = ColaboradorForm
     template_name = 'app_EPINav/pages/colaborador/colaborador_form.html'
     success_url = reverse_lazy('colaborador_list')
-    
+
+
+# Atualização de colaboradores
+@method_decorator(login_required_custom, name="dispatch")
 class ColaboradorUpdateView(UpdateView):
     model = Colaborador
     form_class = ColaboradorForm
     template_name = 'app_EPINav/pages/colaborador/colaborador_form.html'
     success_url = reverse_lazy('colaborador_list')
 
+
+# Exclusão de colaboradores (modal no front-end)
+@method_decorator(login_required_custom, name="dispatch")
 class ColaboradorDeleteView(DeleteView):
     model = Colaborador
-    template_name = 'app_EPINav/pages/colaborador/colaborador_confirm_delete.html'
     success_url = reverse_lazy('colaborador_list')
