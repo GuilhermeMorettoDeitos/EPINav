@@ -17,7 +17,7 @@ class EquipamentoForm(forms.ModelForm):
         if not self.instance or not self.instance.pk:
             allowed_choices = [
                 ('emprestado', 'Emprestado'),
-                ('em uso', 'Em uso'),
+                ('em_uso', 'Em uso'),
                 ('fornecido', 'Fornecido'),
             ]
             self.fields['estado'].choices = allowed_choices

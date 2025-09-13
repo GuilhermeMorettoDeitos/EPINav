@@ -24,3 +24,16 @@ def admin_required(view_func):
             messages.error(request, "Você não tem permissão para acessar esta página.")
             return redirect('home')
     return wrapper
+
+def admin_required_for_delete(view_func):
+    def wrapper(request, *args, **kwargs):
+        # Checa se é um usuário do sistema ou colaborador logado
+        is_admin = request.session.get('is_admin', False)  # para usuariosSistema
+        usuario_id = request.session.get('usuario_id')
+        
+        if usuario_id and is_admin:
+            return view_func(request, *args, **kwargs)
+        else:
+            messages.error(request, "Você não tem permissão para deletar equipamentos.")
+            return redirect('equipamento_list')
+    return wrapper

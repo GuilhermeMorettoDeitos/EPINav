@@ -4,6 +4,8 @@
 {% block content %}
 {% include 'app_EPINav/partials/header.html' %}
 
+{% include 'app_EPINav/partials/mensagens_erro.html' %}
+
 <div class="container">
   <h2>{% if object %}Editar{% else %}Novo{% endif %} Usuário</h2>
   <form method="post">

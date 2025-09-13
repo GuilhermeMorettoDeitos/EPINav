@@ -1,0 +1,41 @@
+{% extends "app_EPINav/base.html" %}
+{% block title %}Mensagens de Erro{% endblock title %}
+
+{% block content %}
+<div class="container mt-3" id="messages-container">
+    <!-- Exibe mensagens de erro -->
+    {% if messages %}
+        {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% elif message.tags == 'error' %}
+            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% else %}
+            <div class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endif %}
+        {% endfor %}
+
+        <script>
+        // Desaparecer mensagens após 5 segundos (5000ms)
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('#messages-container .alert');
+            alerts.forEach(alert => {
+            // Remove as classes do Bootstrap para fazer o fade out
+            alert.classList.remove('show');
+            alert.classList.add('hide');
+            setTimeout(() => alert.remove(), 500); // Remove do DOM após a animação
+            });
+        }, 5000);
+        </script>
+    {% endif %}
+</div>
+{%endblock content %}

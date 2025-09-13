@@ -1,6 +1,7 @@
 {% extends "app_EPINav/base.html" %}
 
 {% block content %}
+{% include 'app_EPINav/partials/mensagens_erro.html' %}
 <div class="container mt-5">
   <h2>Login</h2>
   <form method="post" action="{% url 'login' %}">
@@ -24,8 +25,5 @@
     <button type="submit" class="btn btn-primary">Entrar</button>
   </form>
 
-  {% for message in messages %}
-    <div class="alert alert-warning mt-3">{{ message }}</div>
-  {% endfor %}
 </div>
 {% endblock %}

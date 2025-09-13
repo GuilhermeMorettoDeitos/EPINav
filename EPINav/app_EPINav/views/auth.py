@@ -1,13 +1,25 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.utils import timezone
 from app_EPINav.models.usuario import UsuarioSistema
 from app_EPINav.models import Colaborador
+import time
 
 def login_view(request):
     if request.method == "POST":
+        # Verifica se o usuário tentou logar recentemente
+        ultima_tentativa = request.session.get('ultima_tentativa_login')
+        agora = time.time()
+
+        if ultima_tentativa and agora - ultima_tentativa < 2:  # menos de 2 segundos
+            messages.error(request, "Aguarde 2 segundos antes de tentar novamente.")
+            return render(request, "app_EPINav/pages/login.html")
+
+        # Atualiza a última tentativa
+        request.session['ultima_tentativa_login'] = agora
+
         nome_usuario = request.POST.get("nome_usuario")
         senha = request.POST.get("senha")
-
         user = None
 
         # Tenta buscar primeiro UsuarioSistema
@@ -38,12 +50,13 @@ def login_view(request):
 
         if user:
             next_url = request.POST.get('next') or 'home'
+            messages.success(request, f"Bem-vindo, {user.nome_usuario}!")
             return redirect(next_url)
+               
         else:
             messages.error(request, "Usuário ou senha incorretos.")
 
     return render(request, "app_EPINav/pages/login.html")
-
 
 def logout_view(request):
     request.session.flush()

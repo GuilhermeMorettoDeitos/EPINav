@@ -4,6 +4,8 @@
 {% block content %}
 {% include 'app_EPINav/partials/header.html' %}
 
+{% include 'app_EPINav/partials/mensagens_erro.html' %}
+
 <div class="container">
   <h2>Lista de Colaboradores</h2>
   <a class="btn btn-primary" href="{% url 'colaborador_create' %}">➕ Adicionar Novo</a>

@@ -4,6 +4,8 @@
 {% block content %}
 {% include 'app_EPINav/partials/header.html' %}
 
+{% include 'app_EPINav/partials/mensagens_erro.html' %}
+
 <div class="container mt-4">
   <h2>Equipamentos</h2>
   <a class="btn btn-primary my-2" href="{% url 'equipamento_create' %}">➕ Adicionar Equipamento</a>
