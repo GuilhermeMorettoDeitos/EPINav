@@ -4,17 +4,17 @@
 {% block content %}
 {% include 'app_EPINav/partials/header.html' %}
 
-<div class="container">
+<div class="container mt-4">
   <h2>Equipamentos</h2>
-  <a class="btn btn-primary" href="{% url 'equipamento_create' %}">➕ Adicionar Equipamento</a>
+  <a class="btn btn-primary my-2" href="{% url 'equipamento_create' %}">➕ Adicionar Equipamento</a>
 
-  <table class="table mt-3">
-    <thead>
+  <table class="table table-striped mt-3 align-middle">
+    <thead class="table-dark">
       <tr>
         <th>Nome</th>
         <th>Fabricante</th>
         <th>Estado</th>
-        <th>Ações</th>
+        <th class="text-center">Ações</th>
       </tr>
     </thead>
     <tbody>
@@ -23,20 +23,20 @@
           <td>{{ e.nome }}</td>
           <td>{{ e.fabricante }}</td>
           <td>{{ e.get_estado_display }}</td>
-          <td>
+          <td class="text-center">
             <a href="{% url 'equipamento_update' e.pk %}" class="btn btn-sm btn-warning">Editar</a>
             <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ e.pk }}">Deletar</button>
 
-            <!-- Modal -->
+            <!-- Modal de confirmação -->
             <div class="modal fade" id="deleteModal{{ e.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ e.pk }}" aria-hidden="true">
-              <div class="modal-dialog">
+              <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                  <div class="modal-header">
+                  <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title" id="deleteModalLabel{{ e.pk }}">Confirmar Exclusão</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
                   </div>
                   <div class="modal-body">
-                    Tem certeza que deseja excluir <strong>{{ e.nome }}</strong>?
+                    Tem certeza que deseja excluir o equipamento <strong>{{ e.nome }}</strong>?
                   </div>
                   <div class="modal-footer">
                     <form method="post" action="{% url 'equipamento_delete' e.pk %}">
@@ -48,19 +48,19 @@
                 </div>
               </div>
             </div>
-
+            <!-- Fim do modal -->
           </td>
         </tr>
       {% empty %}
         <tr>
-          <td colspan="4">Nenhum equipamento cadastrado.</td>
+          <td colspan="4" class="text-center">Nenhum equipamento cadastrado.</td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
 </div>
+{% endblock %}
 
-{% endblock content %}
 {% block footer %}
 {% include 'app_EPINav/partials/footer.html' %}
 {% endblock %}

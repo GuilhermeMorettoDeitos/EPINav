@@ -4,10 +4,10 @@ from django.utils.decorators import method_decorator
 
 from app_EPINav.models.colaborador import Colaborador
 from app_EPINav.forms.colaborador import ColaboradorForm
-from app_EPINav.views.decorators import login_required_custom  # decorator de login
+from app_EPINav.views.decorators import login_required_custom, admin_required
 
 # Listagem de colaboradores
-@method_decorator(login_required_custom, name="dispatch")
+@method_decorator([login_required_custom, admin_required], name='dispatch')
 class ColaboradorListView(ListView):
     model = Colaborador
     template_name = 'app_EPINav/pages/colaborador/colaborador_list.html'
@@ -15,7 +15,7 @@ class ColaboradorListView(ListView):
 
 
 # Criação de colaboradores
-@method_decorator(login_required_custom, name="dispatch")
+@method_decorator([login_required_custom, admin_required], name='dispatch')
 class ColaboradorCreateView(CreateView):
     model = Colaborador
     form_class = ColaboradorForm
@@ -24,7 +24,7 @@ class ColaboradorCreateView(CreateView):
 
 
 # Atualização de colaboradores
-@method_decorator(login_required_custom, name="dispatch")
+@method_decorator([login_required_custom, admin_required], name='dispatch')
 class ColaboradorUpdateView(UpdateView):
     model = Colaborador
     form_class = ColaboradorForm
@@ -32,8 +32,8 @@ class ColaboradorUpdateView(UpdateView):
     success_url = reverse_lazy('colaborador_list')
 
 
-# Exclusão de colaboradores (modal no front-end)
-@method_decorator(login_required_custom, name="dispatch")
+# Exclusão de colaboradores
+@method_decorator([login_required_custom, admin_required], name='dispatch')
 class ColaboradorDeleteView(DeleteView):
     model = Colaborador
     success_url = reverse_lazy('colaborador_list')

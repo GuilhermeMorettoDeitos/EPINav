@@ -4,8 +4,7 @@ from django.utils.decorators import method_decorator
 
 from app_EPINav.models.equipamento import Equipamento
 from app_EPINav.forms.equipamento import EquipamentoForm
-from app_EPINav.views.decorators import login_required_custom  # decorator que protege as views
-
+from app_EPINav.views.decorators import login_required_custom
 
 # Listagem de equipamentos (apenas usuários logados podem acessar)
 @method_decorator(login_required_custom, name="dispatch")

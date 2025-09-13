@@ -1,9 +1,26 @@
 from django.shortcuts import redirect
+from functools import wraps
+from django.contrib import messages
+
+
 
 def login_required_custom(view_func):
     def wrapper(request, *args, **kwargs):
-        if request.session.get('usuario_id'):  # verifica se o usuário está logado
+        if request.session.get('usuario_id') or request.session.get('colaborador_id'):
+            return view_func(request, *args, **kwargs)
+        return redirect('login')
+    return wrapper
+
+
+def admin_required(view_func):
+    def wrapper(request, *args, **kwargs):
+        # Checa se é um usuário do sistema ou colaborador logado
+        is_admin = request.session.get('is_admin', False)  # para usuariosSistema
+        usuario_id = request.session.get('usuario_id')
+        
+        if usuario_id and is_admin:
             return view_func(request, *args, **kwargs)
         else:
-            return redirect('login')  # redireciona para login se não estiver logado
+            messages.error(request, "Você não tem permissão para acessar esta página.")
+            return redirect('home')
     return wrapper
