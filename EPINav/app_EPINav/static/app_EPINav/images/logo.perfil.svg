@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-labelledby="title desc"
+  viewBox="0 0 300 300"
+  width="300"
+  height="300"
+>
+  <title id="title">Logo EPINav Perfil</title>
+  <desc id="desc">Ícone compacto da marca EPINav para uso em perfil de empresa.</desc>
+
+  <!-- Definições -->
+  <defs>
+    <!-- Fundo em degradê azul -->
+    <linearGradient id="bg-gradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4FC3F7"/> <!-- azul claro -->
+      <stop offset="100%" stop-color="#01579B"/> <!-- azul forte -->
+    </linearGradient>
+
+    <!-- Texto em degradê verde claro + branco -->
+    <linearGradient id="text-gradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#A5F2A5"/> <!-- verde claro -->
+      <stop offset="100%" stop-color="#FFFFFF"/> <!-- branco -->
+    </linearGradient>
+
+    <!-- Sombra suave -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Fundo redondo -->
+  <circle cx="150" cy="150" r="140" fill="url(#bg-gradient)" />
+
+  <!-- Ícone estilizado (um escudo para remeter a segurança dos EPIs) -->
+  <path
+    d="M150 60 L210 90 V150 C210 200 180 230 150 240 C120 230 90 200 90 150 V90 Z"
+    fill="#FFFFFF"
+    opacity="0.2"
+  />
+
+  <!-- Nome EPINav centralizado -->
+  <text
+    x="50%"
+    y="160"
+    text-anchor="middle"
+    font-family="Segoe UI, Roboto, Arial, sans-serif"
+    font-size="48"
+    font-weight="700"
+    fill="url(#text-gradient)"
+    filter="url(#shadow)"
+  >
+    EPINav
+  </text>
+</svg>
