@@ -12,6 +12,12 @@
       <input type="hidden" name="next" value="{{ request.GET.next }}">
     {% endif %}
 
+    {% load static %}
+
+    <div class="text-center my-4">
+<img src="{% static 'app_EPINav/images/logo.svg' %}" alt="EPINav Logo" width="500">
+    </div>
+
     <div class="mb-3">
       <label for="nome_usuario" class="form-label">Usuário</label>
       <input type="text" name="nome_usuario" class="form-control" required>
