@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 
 from app_EPINav.views import (
     ColaboradorListView,
@@ -20,6 +22,8 @@ from app_EPINav.views.equipamento import (
     EquipamentoListView, EquipamentoCreateView,
     EquipamentoUpdateView, EquipamentoDeleteView
 )
+ 
+from app_EPINav.views import emprestimo
 
 urlpatterns = [
     path('', login_view, name='login'),
@@ -43,4 +47,12 @@ urlpatterns = [
     path('equipamentos/novo/', EquipamentoCreateView.as_view(), name='equipamento_create'),
     path('equipamentos/<int:pk>/editar/', EquipamentoUpdateView.as_view(), name='equipamento_update'),
     path('equipamentos/<int:pk>/excluir/', EquipamentoDeleteView.as_view(), name='equipamento_delete'),
+    
+    # Emprestimo
+    path("emprestimos/", emprestimo.EmprestimoListView.as_view(), name="emprestimo_list"),
+    path("emprestimos/novo/", emprestimo.EmprestimoCreateView.as_view(), name="emprestimo_create"),
+    path("emprestimos/<int:pk>/editar/", emprestimo.EmprestimoUpdateView.as_view(), name="emprestimo_update"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

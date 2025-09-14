@@ -1,0 +1,43 @@
+{% extends "app_EPINav/base.html" %}
+{% block title %}List - Emprestimo{% endblock %}
+
+{% block content %}
+{% include 'app_EPINav/partials/header.html' %}
+{% include 'app_EPINav/partials/mensagens_erro.html' %}
+
+<div class="container mt-4">
+  <h2>Lista de Empréstimos</h2>
+  <a href="{% url 'emprestimo_create' %}" class="btn btn-primary mb-3">Novo Empréstimo</a>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Equipamento</th>
+        <th>Status</th>
+        <th>Data Entrega</th>
+        <th>Prevista Devolução</th>
+        <th>Colaborador</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in object_list %}
+      <tr>
+        <td>{{ e.equipamento.nome }}</td>
+        <td>{{ e.get_status_display }}</td>
+        <td>{{ e.data_entrega|date:"d/m/Y H:i" }}</td>
+        <td>{{ e.data_prevista_devolucao|date:"d/m/Y H:i" }}</td>
+        <td>{{ e.colaborador.nome }}</td>
+        <td>
+          <a href="{% url 'emprestimo_update' e.id %}" class="btn btn-warning btn-sm">Editar</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="6">Nenhum empréstimo encontrado.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+{% block footer %}
+{% include 'app_EPINav/partials/footer.html' %}
+{% endblock %}

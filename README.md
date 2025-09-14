@@ -15,7 +15,47 @@ Antes de começar, verifique se você tem instalado em sua máquina:
 
 ## 🚀 Passo a passo de instalação
 
-### 1. Clonar o repositório
+### AVISO: Para conseguir logar no sistema com o usuario e senha universal (citado posteriormente) é necessário iniciar o projeto primeiramente via dockerfile, dessa forma, o usuario e a senha serão carregados corretamente. (OBS: Essa inconveniência será corrigida em breve)
+Caso você utilize **Windows**, será necessario alterar o dockerfile para conter o seguinte conteúdo:
+```bash
+FROM python:3.12
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8000
+
+# Garante que o script tenha LF e permissão
+COPY entrypoint.sh /entrypoint.sh
+RUN sed -i 's/\r$//' /entrypoint.sh && chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+````
+
+ou rode esse comando no shell do django para criar um usuário:
+
+```bash
+from app_EPINav.models.usuario import UsuarioSistema
+from django.contrib.auth.hashers import make_password
+
+usuario = UsuarioSistema.objects.create(
+    nome_usuario="admin", # Usuário: admim
+    senha=make_password("1234"),  # Senha: 1234
+    is_admin=True
+)
+
+print(f"Usuário criado: {usuario.nome_usuario} (ID: {usuario.id})")
+````
+
+
+### 1. Clonar o repositório 
 
 Abra o terminal e execute:
 

@@ -12,6 +12,8 @@ class Colaborador(models.Model):
     observacoes = models.TextField(blank=True, null=True)
     nome_usuario = models.CharField(max_length=100, unique=True)
     senha = models.CharField(max_length=128)
+    foto = models.ImageField(upload_to="colaboradores/", blank=True, null=True)
+
 
     def set_password(self, raw_password):
         self.senha = make_password(raw_password)

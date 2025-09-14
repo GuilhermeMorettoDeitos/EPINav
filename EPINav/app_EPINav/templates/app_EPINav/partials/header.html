@@ -1,90 +1,117 @@
-{% extends "app_EPINav/base.html" %}
 {% load static %}
-{% block title %}header{% endblock title %}
 
-{% block content %}
 <header>
-    <!-- Navigation Bar com imagem e texto -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            
-            <!-- Marca com imagem -->
-            <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
-                <img id="logo" src="{% static '' %}" 
-                     alt="Logo EPINav" width="35" height="35" class="me-2">
-                EPINav
-            </a>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <!-- Marca -->
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+        <img id="logo" src="{% static 'app_EPINav/images/logo.perfil.svg' %}"
+             alt="Logo EPINav" width="35" height="35" class="me-2">
+        EPINav
+      </a>
 
-            <!-- Botão toggle para mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
-                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+      <!-- Botão mobile (compatível BS e MDB) -->
+      <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+              data-mdb-toggle="collapse" data-mdb-target="#navbarNavDropdown"
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-            <!-- Links da navbar -->
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Page 1</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Page 2</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown link
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                </ul>
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link{% if request.resolver_match.url_name == 'home' %} active{% endif %}" href="{% url 'home' %}">Home</a>
+          </li>
+        </ul>
 
-                <!-- Botão único para alternar tema -->
-                <button id="themeToggle" class="btn btn-outline-secondary ms-auto">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-            </div>
+        <!-- Botão tema -->
+        <button id="themeToggle" class="btn btn-outline-secondary me-3">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <!-- Usuário logado (dropdown) -->
+        <div class="dropdown">
+          <a class="d-flex align-items-center text-decoration-none dropdown-toggle"
+             href="#" role="button"
+             data-bs-toggle="dropdown" data-mdb-toggle="dropdown"
+             aria-expanded="false">
+            {% if tipo_usuario == 'colaborador' and colaborador_logado %}
+              {% if colaborador_logado.foto %}
+                <img src="{{ colaborador_logado.foto.url }}" alt="Foto de perfil"
+                     class="rounded-circle me-2" width="35" height="35">
+              {% else %}
+                <img src="{% static 'app_EPINav/images/default_user.png' %}" alt="Sem foto"
+                     class="rounded-circle me-2" width="35" height="35">
+              {% endif %}
+              <span class="fw-semibold">{{ colaborador_logado.nome }}</span>
+            {% elif tipo_usuario == 'sistema' %}
+              <img src="{% static 'app_EPINav/images/admin_user.png' %}" alt="Admin"
+                   class="rounded-circle me-2" width="35" height="35">
+              <span class="fw-semibold">{{ nome_usuario }}</span>
+            {% else %}
+              <img src="{% static 'app_EPINav/images/default_user.png' %}" alt="Visitante"
+                   class="rounded-circle me-2" width="35" height="35">
+              <span class="fw-semibold">Visitante</span>
+            {% endif %}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li class="dropdown-header">
+              {% if tipo_usuario == 'colaborador' and colaborador_logado %}
+                Logado como <strong>Colaborador</strong>
+              {% elif tipo_usuario == 'sistema' %}
+                Logado como <strong>Usuário do Sistema</strong>
+              {% else %}
+                <strong>Não autenticado</strong>
+              {% endif %}
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">⚙️ Configurações</a></li>
+            <li><a class="dropdown-item" href="{% url 'login' %}">🔑 Login</a></li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}">🚪 Logout</a></li>
+          </ul>
         </div>
-    </nav>
+      </div>
+    </div>
+  </nav>
 </header>
-{% endblock content %}
 
-{% block scripts %}
 <script>
+  // ---------- Tema claro/escuro ----------
+  (function() {
     const html = document.documentElement;
     const btn = document.getElementById("themeToggle");
+    if (!btn) return;
     const icon = btn.querySelector("i");
     const logo = document.getElementById("logo");
 
-    // URLs dos logos
-    const logoLight = "{% static 'app_pets/images/logo_tratada_fundo_claro.svg' %}";
-    const logoDark = "{% static 'app_pets/images/logo_tratada_fundo_escuro.svg' %}";
+    const logoLight = "{% static 'app_EPINav/images/logo.perfil.svg' %}";
+    const logoDark  = "{% static 'app_EPINav/images/logo.perfil.svg' %}";
 
-    // Atualiza ícone e logo
     function updateThemeVisuals(theme) {
-        // ícone
-        icon.className = theme === "dark" ? "fa-solid fa-sun" : "fa-solid fa-moon";
-        // logo
-        logo.src = theme === "dark" ? logoDark : logoLight;
+      if (icon) icon.className = theme === "dark" ? "fa-solid fa-sun" : "fa-solid fa-moon";
+      if (logo) logo.src = theme === "dark" ? logoDark : logoLight;
     }
 
-    // Carregar preferência salva
     const savedTheme = localStorage.getItem("theme") || "light";
     html.setAttribute("data-mdb-theme", savedTheme);
     updateThemeVisuals(savedTheme);
 
-    // Alternar tema ao clicar no botão
     btn.addEventListener("click", () => {
-        const newTheme = html.getAttribute("data-mdb-theme") === "dark" ? "light" : "dark";
-        html.setAttribute("data-mdb-theme", newTheme);
-        localStorage.setItem("theme", newTheme);
-        updateThemeVisuals(newTheme);
+      const newTheme = html.getAttribute("data-mdb-theme") === "dark" ? "light" : "dark";
+      html.setAttribute("data-mdb-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+      updateThemeVisuals(newTheme);
     });
+  })();
+
+  // ---------- Fallback para inicializar dropdowns (funciona com Bootstrap) ----------
+  (function() {
+    if (typeof bootstrap !== "undefined" && bootstrap.Dropdown) {
+      document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(function(el) {
+        new bootstrap.Dropdown(el);
+      });
+    }
+  })();
 </script>
-{% endblock scripts %}

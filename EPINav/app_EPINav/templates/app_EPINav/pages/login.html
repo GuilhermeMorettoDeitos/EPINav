@@ -1,29 +1,45 @@
 {% extends "app_EPINav/base.html" %}
+{% load static %}
 
 {% block content %}
-{% include 'app_EPINav/partials/mensagens_erro.html' %}
-<div class="container mt-5">
-  <h2>Login</h2>
-  <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
+
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg p-4" style="max-width: 450px; width: 100%;">  
+    <!-- Logo -->
+    <div class="text-center mb-4">
+      <img src="{% static 'app_EPINav/images/logo.svg' %}" alt="EPINav Logo" width="400" class="mb-3">
+      <h3 class="fw-bold text-primary">Login</h3>
+      <p class="text-muted">Acesse o sistema com suas credenciais</p>
+    </div>
+   {% comment %} {% include 'app_EPINav/partials/botao_modo_escuro.html' %} {% endcomment %}
     
-    <!-- Campo oculto para redirecionamento -->
-    {% if request.GET.next %}
-      <input type="hidden" name="next" value="{{ request.GET.next }}">
-    {% endif %}
 
-    <div class="mb-3">
-      <label for="nome_usuario" class="form-label">Usuário</label>
-      <input type="text" name="nome_usuario" class="form-control" required>
-    </div>
+    <!-- Formulário -->
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      
+      {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+      {% endif %}
 
-    <div class="mb-3">
-      <label for="senha" class="form-label">Senha</label>
-      <input type="password" name="senha" class="form-control" required>
-    </div>
+      <div class="mb-3">
+        <label for="nome_usuario" class="form-label">Usuário</label>
+        <input type="text" name="nome_usuario" class="form-control" placeholder="Digite seu usuário" required>
+      </div>
 
-    <button type="submit" class="btn btn-primary">Entrar</button>
-  </form>
+      <div class="mb-3">
+        <label for="senha" class="form-label">Senha</label>
+        <input type="password" name="senha" class="form-control" placeholder="Digite sua senha" required>
+      </div>
 
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
+      </div>
+    </form>
+    <!-- Mensagens -->
+    {% include 'app_EPINav/partials/mensagens_erro.html' %}
+  </div>
 </div>
+
 {% endblock %}
