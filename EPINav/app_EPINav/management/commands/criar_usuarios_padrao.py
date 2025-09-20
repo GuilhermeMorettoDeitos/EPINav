@@ -9,9 +9,12 @@ class Command(BaseCommand):
         # Usuário admin
         admin_user, created = UsuarioSistema.objects.get_or_create(
             nome_usuario="admin",
-            defaults={"senha": "1234"}
+            senha="",
+            is_admin=True,
         )
         if created:
+            UsuarioSistema.set_password(admin_user, "1234")
+            UsuarioSistema.save(admin_user)
             self.stdout.write("UsuárioSistema admin criado (admin/1234)")
         else:
             self.stdout.write("UsuárioSistema admin já existe")
