@@ -25,6 +25,8 @@ from app_EPINav.views.equipamento import (
  
 from app_EPINav.views import emprestimo
 
+from app_EPINav.views import relatorio
+
 urlpatterns = [
     path('', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
@@ -37,10 +39,10 @@ urlpatterns = [
     path('colaboradores/<int:pk>/deletar/', ColaboradorDeleteView.as_view(), name='colaborador_delete'),
 
     # Usuários
-    path('usuarios/', listar_usuarios, name='listar_usuarios'),
-    path('usuarios/novo/', criar_usuario, name='criar_usuario'),
-    path('usuarios/<int:pk>/editar/', editar_usuario, name='editar_usuario'),
-    path('usuarios/<int:pk>/deletar/', deletar_usuario, name='deletar_usuario'),
+    path('usuarios/', listar_usuarios, name='usuario_list'),
+    path('usuarios/novo/', criar_usuario, name='usuario_create'),
+    path('usuarios/<int:pk>/editar/', editar_usuario, name='usuario_edit'),
+    path('usuarios/<int:pk>/deletar/', deletar_usuario, name='usuario_delete'),
     
     # Equipamentos
     path('equipamentos/', EquipamentoListView.as_view(), name='equipamento_list'),
@@ -52,6 +54,10 @@ urlpatterns = [
     path("emprestimos/", emprestimo.EmprestimoListView.as_view(), name="emprestimo_list"),
     path("emprestimos/novo/", emprestimo.EmprestimoCreateView.as_view(), name="emprestimo_create"),
     path("emprestimos/<int:pk>/editar/", emprestimo.EmprestimoUpdateView.as_view(), name="emprestimo_update"),
+    
+    # Relatórios
+    path("relatorios/", relatorio.relatorios, name="relatorios"),
+    path("relatorios/<int:pk>/editar/", relatorio.editar_relatorio, name="relatorio_edit"),
 ]
 
 if settings.DEBUG:
